@@ -1,62 +1,52 @@
-/* Les options pour afficher la France */
+/* Les options pour afficher la carte */
 const mapOptions = {
     center: [47.523103194323774, 7.478256333714517], //Hagenthal-le-bas
     zoom: 15
 };
 
-/* Les options pour affiner la localisation */
-const locationOptions = {
-    maximumAge: 5000,
-    timeout: 5000,
-    enableHighAccuracy: true
-};
-
 /* Création du conteneur de la carte */
-var map = new L.map("map", mapOptions);
+var myMap = new L.map("mapDiv", mapOptions);
 
 /* Création de la couche OpenStreetMap */
 var layer = new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' });
 
 /* Ajoute la couche au conteneur de la carte */
-map.addLayer(layer);
+myMap.addLayer(layer);
 
-/* Verifie que le navigateur est compatible avec la géolocalisation */
-if ("geolocation" in navigator) {
-    //regarde la position de l'utilisateur et suit ses déplacements
-    var actualPosition = navigator.geolocation.watchPosition(handleLocation, handleLocationError, locationOptions);
-} else {
-    /* Le navigateur n'est pas compatible */
-    alert("Merci de bien vouloir activer la localisation sur votre appareil");
-};
+/* Les options pour affiner la localisation */
+var options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+  };
+  
+  let userPositionIcon = L.icon({
+      iconUrl: '/rond-vert.png', 
+      iconSize: [30,30],
+      iconAnchor: [15,15]
+  })
 
-function handleLocation(position) {
-    /* Zoom avant de trouver la localisation */
-    map.setZoom(16);
-    /* Centre la carte sur la latitude et la longitude de la localisation de l'utilisateur */
-    map.panTo(new L.LatLng(position.coords.latitude, position.coords.longitude));
-};
+  function success(pos) {
+    var crd = pos.coords;
+    L.marker([47.523103194323774, 7.478256333714517], {icon: userPositionIcon}).addTo(myMap);
 
-function handleLocationError(error) {
-    {
-        switch(error.code){
-            case error.PERMISSION_DENIED:
-                alert("L'utilisateur n'a pas autorisé l'accès à sa position");
-                break;          
-            case error.POSITION_UNAVAILABLE:
-                alert("L'emplacement de l'utilisateur n'a pas pu être déterminé");
-                break;
-            case error.TIMEOUT:
-                alert("Le service n'a pas répondu à temps");
-                break;
-            }
-    };
-};
+    // console.log('Votre position actuelle est :');
+    // console.log(`Latitude : ${crd.latitude}`);
+    // console.log(`Longitude : ${crd.longitude}`);
+    // console.log(`La précision est de ${crd.accuracy} mètres.`);
+  }
+  
+  function error(err) {
+    console.warn(`ERREUR (${err.code}): ${err.message}`);
+  }
+  
+  navigator.geolocation.watchPosition(success, error, options);
 
-// Création marker boulangerie Hagenthal
-var circle = L.circle([47.52577, 7.47893], {
+  // Création marker boulangerie Hagenthal
+var firstObjective = L.circle([47.52577, 7.47893], {
     color: 'blue', 
     fillColor: 'lightblue', 
     fillOpacity: 0.5, 
     radius: 50
-}).addTo(map);
+}).addTo(myMap);
