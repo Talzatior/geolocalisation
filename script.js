@@ -27,11 +27,12 @@ let userPositionIcon = L.icon({
     iconAnchor: [15,15]
 })
 
-let userPosition;
+
 
 function success(pos) {
-  userPosition = pos.coords;
-  L.marker(userPosition, {icon: userPositionIcon}).addTo(myMap);
+  console.log(pos)
+  currentPos = [pos.coords.latitude, pos.coords.longitude];
+  L.marker(currentPos, {icon: userPositionIcon}).addTo(myMap);
 }
 
 function error(err) {
@@ -39,6 +40,8 @@ function error(err) {
 }
 
 navigator.geolocation.watchPosition(success, error, options);
+
+let userPosition;
 
 let firstObjectiveCoord = [47.52577, 7.47893];
 // Création marker boulangerie Hagenthal  
