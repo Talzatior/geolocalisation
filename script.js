@@ -1,11 +1,11 @@
 /* Les options pour afficher la carte */
-const mapOptions = {
-  center: [47.523103194323774, 7.478256333714517], //Hagenthal-le-bas
-  zoom: 15
-};
+// const mapOptions = {
+//   center: [47.523103194323774, 7.478256333714517], //Hagenthal-le-bas
+//   zoom: 15
+// };
 
 /* Création du conteneur de la carte */
-var myMap = new L.map("mapDiv", mapOptions);
+var myMap = new L.map("mapDiv").locate({setView: true, maxZoom: 16});
 
 /* Création de la couche OpenStreetMap */
 var layer = new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -27,12 +27,36 @@ let userPositionIcon = L.icon({
     iconAnchor: [15,15]
 })
 
+function getDistance(start, goal) {
+  // return distance in meters
+  var lon1 = toRadian(start[1]),
+      lat1 = toRadian(start[0]),
+      lon2 = toRadian(goal[1]),
+      lat2 = toRadian(goal[0]);
 
+  var deltaLat = lat2 - lat1;
+  var deltaLon = lon2 - lon1;
+
+  var a = Math.pow(Math.sin(deltaLat/2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(deltaLon/2), 2);
+  var c = 2 * Math.asin(Math.sqrt(a));
+  var EARTH_RADIUS = 6371;
+  return c * EARTH_RADIUS * 1000;
+}
+function toRadian(degree) {
+  return degree*Math.PI/180;
+}
 
 function success(pos) {
-  console.log(pos)
   currentPos = [pos.coords.latitude, pos.coords.longitude];
-  L.marker(currentPos, {icon: userPositionIcon}).addTo(myMap);
+  let positionMarker = L.marker(currentPos, {icon: userPositionIcon}).addTo(myMap);
+
+  let objectiveDistance = getDistance(currentPos, firstObjectiveCoord);
+  console.log(objectiveDistance);
+  if (objectiveDistance < 50) {
+    firstObjective.openPopup();
+    } else {
+    firstObjective.closePopup();
+    }
 }
 
 function error(err) {
@@ -52,13 +76,3 @@ let firstObjective = L.circle(firstObjectiveCoord, {
   radius: 50
 }).addTo(myMap);
 firstObjective.bindPopup("Bienvenue à la boulangerie !");
-
-let objectiveDistance = userPosition.distanceTo(L.latLng(firstObjectiveCoord));
-
-if (objectiveDistance < 50) {
-firstObjective.openPopup();
-} else {
-firstObjective.closePopup();
-}
-
-
