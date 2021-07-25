@@ -1,9 +1,3 @@
-/* Les options pour afficher la carte */
-// const mapOptions = {
-//   center: [47.523103194323774, 7.478256333714517], //Hagenthal-le-bas
-//   zoom: 15
-// };
-
 /* Création du conteneur de la carte */
 var myMap = new L.map("mapDiv").locate({setView: true, maxZoom: 16});
 
