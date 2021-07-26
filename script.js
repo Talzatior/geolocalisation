@@ -23,8 +23,7 @@ let userPositionIcon = L.icon({
 });
 
 /* Initialise le marker à la position de l'utilisateur de l'utilisateur */
-let currentPos = [];
-let positionMarker = L.marker(currentPos, {icon: userPositionIcon})
+let positionMarker;
 
 function getDistance(start, goal) {
   // return distance in meters
@@ -49,9 +48,10 @@ function success(pos) {
   currentPos = [pos.coords.latitude, pos.coords.longitude];
   if (!positionMarker){
     positionMarker = L.marker(currentPos, {icon: userPositionIcon}).addTo(myMap);
+  }else {
+    positionMarker.setLatLng(currentPos);
   }
-  console.log("positionMarker : " + positionMarker.getLatLng());
-  console.log("currentPos : " + currentPos);
+
 
   let objectiveDistance = getDistance(currentPos, firstObjectiveCoord);
 
