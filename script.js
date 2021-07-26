@@ -49,7 +49,8 @@ function success(pos) {
   if (!positionMarker){
     positionMarker = L.marker(currentPos, {icon: userPositionIcon}).addTo(myMap);
   }else {
-    positionMarker.setLatLng(currentPos);
+    positionMarker.remove()
+    positionMarker = L.marker(currentPos, {icon: userPositionIcon}).addTo(myMap);
   }
 
 
