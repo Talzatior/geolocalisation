@@ -46,7 +46,8 @@ function toRadian(degree) {
 
 function success(pos) {
   currentPos = [pos.coords.latitude, pos.coords.longitude];
-  if (!positionMarker){
+  console.log(positionMarker);
+  if (positionMarker === undefined){
     positionMarker = L.marker(currentPos, {icon: userPositionIcon}).addTo(myMap);
   }else {
     positionMarker.setLatLng(currentPos);
