@@ -1,25 +1,30 @@
 /* Création du conteneur de la carte */
-var myMap = new L.map("mapDiv").locate({setView: true, maxZoom: 16});
+let myMap = new L.map("mapDiv").locate({setView: true, maxZoom: 16});
 
 /* Création de la couche OpenStreetMap */
-var layer = new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+let layer = new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
   { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' });
 
 /* Ajoute la couche au conteneur de la carte */
 myMap.addLayer(layer);
 
 /* Les options pour affiner la localisation */
-var options = {
+let options = {
   enableHighAccuracy: true,
   timeout: 5000,
   maximumAge: 0
 };
 
+/* Définition de l'icône du marker sur la position de l'utilisateur */
 let userPositionIcon = L.icon({
     iconUrl: '/rond-vert.png', 
     iconSize: [30,30],
     iconAnchor: [15,15]
-})
+});
+
+/* Initialise le marker à la position de l'utilisateur de l'utilisateur */
+let currentPos = [];
+let positionMarker = L.marker(currentPos, {icon: userPositionIcon})
 
 function getDistance(start, goal) {
   // return distance in meters
@@ -35,31 +40,31 @@ function getDistance(start, goal) {
   var c = 2 * Math.asin(Math.sqrt(a));
   var EARTH_RADIUS = 6371;
   return c * EARTH_RADIUS * 1000;
-}
+};
 function toRadian(degree) {
   return degree*Math.PI/180;
-}
+};
 
 function success(pos) {
   currentPos = [pos.coords.latitude, pos.coords.longitude];
-  let positionMarker = L.marker(currentPos, {icon: userPositionIcon}).addTo(myMap);
+  if (positionMarker.getLatLng != currentPos){
+    positionMarker = L.marker(currentPos, {icon: userPositionIcon}).addTo(myMap);
+  }
 
   let objectiveDistance = getDistance(currentPos, firstObjectiveCoord);
-  console.log(objectiveDistance);
+
   if (objectiveDistance < 50) {
     firstObjective.openPopup();
     } else {
     firstObjective.closePopup();
     }
-}
+};
 
 function error(err) {
   console.warn(`ERREUR (${err.code}): ${err.message}`);
-}
+};
 
 navigator.geolocation.watchPosition(success, error, options);
-
-let userPosition;
 
 let firstObjectiveCoord = [47.52577, 7.47893];
 // Création marker boulangerie Hagenthal  
