@@ -50,7 +50,7 @@ function success(pos) {
   if (positionMarker === undefined){
     positionMarker = L.marker(currentPos, {icon: userPositionIcon}).addTo(myMap);
   }else {
-    positionMarker.setLatLng(currentPos);
+    positionMarker.setLatLng(currentPos).update();
   }
 
 
