@@ -11,8 +11,7 @@ myMap.addLayer(layer);
 /* Les options pour affiner la localisation */
 let options = {
   enableHighAccuracy: true,
-  timeout: 5000,
-  maximumAge: 0
+  timeout: 5000
 };
 
 /* Définition de l'icône du marker sur la position de l'utilisateur */
@@ -46,13 +45,15 @@ function toRadian(degree) {
 
 function success(pos) {
   currentPos = [pos.coords.latitude, pos.coords.longitude];
-  if (positionMarker === undefined){
+  if (!positionMarker){
     positionMarker = L.marker(currentPos, {icon: userPositionIcon}).addTo(myMap);
   }else {
     let newLat = pos.coords.latitude;
     let newLng = pos.coords.longitude;
     let newLatLng = new L.LatLng(newLat, newLng);
-    console.log(newLatLng)
+    console.log("newLat = " + newLat);
+    console.log("newLng = " + newLng);
+    console.log("newLatLng = " + newLatLng);
     positionMarker.setLatLng(newLatLng);
   }
 
