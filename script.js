@@ -58,7 +58,7 @@ function success(pos) {
   if (!positionMarker){
     positionMarker = L.marker(currentPos, {icon: userPositionIcon}).addTo(myMap);
   }else {
-    let newLatLng = new L.LatLng(currentPos);
+    let newLatLng = new L.LatLng(currentPos[0], currentPos[1]);
     console.log("newLat = " + newLat);
     console.log("newLng = " + newLng);
     console.log("newLatLng = " + newLatLng);
