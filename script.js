@@ -8,6 +8,16 @@ let layer = new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
 /* Ajoute la couche au conteneur de la carte */
 myMap.addLayer(layer);
 
+/* Création marker boulangerie Hagenthal */
+let firstObjectiveCoord = [47.52577, 7.47893];
+let firstObjective = L.circle(firstObjectiveCoord, {
+  color: 'blue', 
+  fillColor: 'lightblue', 
+  fillOpacity: 0.5, 
+  radius: 50
+}).addTo(myMap);
+firstObjective.bindPopup("Bienvenue à la boulangerie !");
+
 /* Les options pour affiner la localisation */
 let options = {
   enableHighAccuracy: true,
@@ -48,18 +58,13 @@ function success(pos) {
   if (!positionMarker){
     positionMarker = L.marker(currentPos, {icon: userPositionIcon}).addTo(myMap);
   }else {
-    let newLat = pos.coords.latitude;
-    let newLng = pos.coords.longitude;
-    let newLatLng = new L.LatLng(newLat, newLng);
+    let newLatLng = new L.LatLng(curentPos);
     console.log("newLat = " + newLat);
     console.log("newLng = " + newLng);
     console.log("newLatLng = " + newLatLng);
     positionMarker.setLatLng(newLatLng);
   }
-
-
   let objectiveDistance = getDistance(currentPos, firstObjectiveCoord);
-
   if (objectiveDistance < 50) {
     firstObjective.openPopup();
     } else {
@@ -72,13 +77,3 @@ function error(err) {
 };
 
 navigator.geolocation.watchPosition(success, error, options);
-
-let firstObjectiveCoord = [47.52577, 7.47893];
-// Création marker boulangerie Hagenthal  
-let firstObjective = L.circle(firstObjectiveCoord, {
-  color: 'blue', 
-  fillColor: 'lightblue', 
-  fillOpacity: 0.5, 
-  radius: 50
-}).addTo(myMap);
-firstObjective.bindPopup("Bienvenue à la boulangerie !");
