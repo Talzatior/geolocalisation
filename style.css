@@ -8,3 +8,23 @@ html, body, #mapDiv {
     height: 100%;
     width: 100vw;
 }
+
+
+
+#popupInfo {
+    display: none;
+}
+
+#popupInfo.visible {
+    display: block;
+    position: fixed;
+    margin: 0;
+    border: none;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2000;
+    height: 100vh;
+}
+

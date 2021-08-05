@@ -16,7 +16,28 @@ let firstObjective = L.circle(firstObjectiveCoord, {
   fillOpacity: 0.5, 
   radius: 50
 }).addTo(myMap);
-firstObjective.bindPopup("Bienvenue à la boulangerie !");
+
+
+
+let popupContent = document.getElementById('popupInfo');
+let popup = new L.Popup();
+
+firstObjective.on('click', () => {
+  console.log(popupContent);
+  popup.setContent(popupContent);
+  popupContent.classList.add('visible');
+  firstObjective.bindPopup(popupContent).addTo(myMap);
+})
+
+// myMap.on('popupclose', () => {
+//   popupContent.classList.remove('visible')
+// });
+
+function closeDescriptionPopup() {
+  popupContent.classList.remove('visible');
+}
+let closeBtn = document.getElementById('closePopupBtn');
+closeBtn.onclick(closeDescriptionPopup());
 
 /* Les options pour affiner la localisation */
 let options = {
@@ -66,9 +87,7 @@ function success(pos) {
   let objectiveDistance = getDistance(currentPos, firstObjectiveCoord);
   if (objectiveDistance < 50) {
     firstObjective.openPopup();
-    } else {
-    firstObjective.closePopup();
-    }
+    } 
 };
 
 function error(err) {
