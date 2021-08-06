@@ -18,24 +18,24 @@ let firstObjective = L.circle(firstObjectiveCoord, {
 }).addTo(myMap);
 
 
-
+/* Définition de la popup et de son contenu */
 let popupContent = document.getElementById('popupInfo');
 let popup = new L.Popup();
 
-firstObjective.on('click', () => {
-  console.log(popupContent);
+/* Fonction d'affichage de la popup */
+function displayPopup() {
   popup.setContent(popupContent);
-  popupContent.classList.add('visible');
-  firstObjective.bindPopup(popupContent).addTo(myMap);
-})
-
-// myMap.on('popupclose', () => {
-//   popupContent.classList.remove('visible')
-// });
-
-function closeDescriptionPopup() {
-  popupContent.classList.remove('visible');
+  popupContent.style.display = "block";
 }
+/* Affichage de la popup au click sur le marker */
+firstObjective.on('click', () => {
+  displayPopup();
+})
+/* Fonction de fermeture de la popup */
+function closeDescriptionPopup() {
+  popupContent.style.display = "none";
+}
+/* Fermeture de la popup au click sur le bouton X */
 let closeBtn = document.getElementById('closePopupBtn');
 closeBtn.onclick(closeDescriptionPopup());
 
@@ -86,7 +86,7 @@ function success(pos) {
   }
   let objectiveDistance = getDistance(currentPos, firstObjectiveCoord);
   if (objectiveDistance < 50) {
-    firstObjective.openPopup();
+    displayPopup();
     } 
 };
 

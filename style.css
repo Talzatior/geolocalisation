@@ -9,15 +9,9 @@ html, body, #mapDiv {
     width: 100vw;
 }
 
-
-
 #popupInfo {
     display: none;
-}
-
-#popupInfo.visible {
-    display: block;
-    position: fixed;
+    position: absolute;
     margin: 0;
     border: none;
     top: 0;
@@ -26,5 +20,11 @@ html, body, #mapDiv {
     left: 0;
     z-index: 2000;
     height: 100vh;
+}
+
+.close-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
 }
 
