@@ -18,8 +18,19 @@ html, body, #mapDiv {
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 2000;
+    z-index: 20000;
     height: 100vh;
+}
+
+.layerToggler {
+    position: absolute;
+    background-image: url(./sat.png);
+    height: 3.5rem;
+    width: 3.5rem;
+    top: 10px;
+    right: 10px;
+    z-index: 2000;
+    cursor: pointer;
 }
 
 .close-button {

@@ -1,12 +1,44 @@
 /* Création du conteneur de la carte */
 let myMap = new L.map("mapDiv").locate({setView: true, maxZoom: 16});
 
-/* Création de la couche OpenStreetMap */
-let layer = new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-  { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' });
+/* Variables couche OpenStreetMap */
+let osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+let osmOptions = { attribution: '&copy; <a href=/"https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' };
+/* Variables couche satellite Geoportail */
+let satUrl = 'https://wxs.ign.fr/{ignApiKey}/geoportail/wmts?'+
+'&REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&TILEMATRIXSET=PM'+
+'&LAYER={ignLayer}&STYLE={style}&FORMAT={format}'+
+'&TILECOL={x}&TILEROW={y}&TILEMATRIX={z}';
+let satOptions = {
+  ignApiKey: 'pratique',
+  ignLayer: 'ORTHOIMAGERY.ORTHOPHOTOS',
+  style: 'normal',
+  format: 'image/jpeg',
+  service: 'WMTS'
+};
 
+let osmLayer;
+/* Création de la couche OpenStreetMap */
+let layer = new L.TileLayer(osmUrl, osmOptions);
 /* Ajoute la couche au conteneur de la carte */
 myMap.addLayer(layer);
+osmLayer = true;
+
+/* Changement de layer au clic sur le bouton */
+let layerToggleButton = document.getElementById('layerToggler');
+function toggleLayer() {
+  if(osmLayer) {
+    myMap.addLayer(new L.TileLayer(satUrl, satOptions));
+    layerToggleButton.style.backgroundImage = 'url(./osm.png)';
+    osmLayer = false;
+    console.log('Boucle 1 : osmLayer : ' + osmLayer);
+  } else {
+    myMap.addLayer(new L.TileLayer(osmUrl, osmOptions));
+    layerToggleButton.style.backgroundImage = 'url(./sat.png)';
+    osmLayer = true;
+  }
+};
+layerToggleButton.onclick = toggleLayer;
 
 /* Création marker boulangerie Hagenthal */
 let firstObjectiveCoord = [47.52577, 7.47893];
