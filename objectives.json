@@ -1,0 +1,27 @@
+{
+    "objectives": [
+        {
+            "coords": [47.52577, 7.47893],
+            "title": "Boulangerie de Hagenthal-le-bas",
+            "description": "Bienvenue à la boulangerie de Hagenthal-le-bas.<br> On y trouve des pâtisseries, des viennoiseries, du pain, des brioches, des petits gâteux et même des glaces maison.",
+            "image": "./boulangerie.jpg",
+            "audio": null,
+            "question": "Que ne trouve-t-on pas à la boulangerie d'Hagenthal-le-bas ?",
+            "answers": [
+                ["Croissants", "faux"], 
+                ["Oeufs", "vrai"], 
+                ["Eclair au café", "faux"], 
+                ["Baguette", "faux"]
+            ],
+            "answer" : null
+        }, 
+        {
+            "coords": [47.52396, 7.476726],
+            "title": "Château de Hagenthal-le-bas",
+            "description": "Voici le château de Hagenthal-le-bas. Il est à vendre et va peut-être devenir un hôtel / Spa.",
+            "image": "./chateau-hagenthal.jpeg",
+            "audio": null,
+            "answer" : null
+        }
+    ]
+}

@@ -40,36 +40,78 @@ function toggleLayer() {
 };
 layerToggleButton.onclick = toggleLayer;
 
-/* Création marker boulangerie Hagenthal */
-let firstObjectiveCoord = [47.52577, 7.47893];
-let firstObjective = L.circle(firstObjectiveCoord, {
-  color: 'blue', 
-  fillColor: 'lightblue', 
-  fillOpacity: 0.5, 
-  radius: 50
-}).addTo(myMap);
-
-
-/* Définition de la popup et de son contenu */
+/* Requête HTTP pour récupérer le contenu du JSON */ 
+const loadJSON = (callback) => {
+  const xObj = new XMLHttpRequest();
+  xObj.overrideMimeType("application/json");
+  xObj.open('GET', './objectives.json', true);
+  xObj.onreadystatechange = () => {
+      if (xObj.readyState === 4 && xObj.status === 200) {
+          callback(xObj.responseText);
+      }
+  };
+  xObj.send(null);
+}
+/* Initialisation variables nécessaires à l'objectif en cours et sa popup */
+let popupIndex = 0;
+let goalCoords = [];
+let goalMarker;
+let popupTitle = document.getElementById('popupTitle');
+let popupDescription = document.getElementById('popupDescription');
+let popupImgSrc = document.getElementById('popupImage');
+let popupQuestion = document.getElementById('question');
+let popupAnswers = document.getElementById('answers');
+/* Définition de la popup */
 let popupContent = document.getElementById('popupInfo');
 let popup = new L.Popup();
+/* Initialisation de la popup grâce au contenu du JSON */
+const initGoal = () => {
+  loadJSON((response) => {
+    const json = JSON.parse(response);
+    const goalPopupElements = json['objectives'];
+    // Add Goal Marker
+    goalCoords = goalPopupElements[popupIndex].coords;
+    goalMarker = L.circle(goalCoords, {
+      color: 'blue', 
+      fillColor: 'lightblue', 
+      fillOpacity: 0.5, 
+      radius: 50
+    }).addTo(myMap);
+    // Add Img src, Title, Description, ...
+    popupTitle.innerText = goalPopupElements[popupIndex].title;
+    popupDescription.innerHTML = goalPopupElements[popupIndex].description;
+    popupImgSrc.src = goalPopupElements[popupIndex].image;
+    popupQuestion.innerHTML = goalPopupElements[popupIndex].question;
 
-/* Fonction d'affichage de la popup */
-function displayPopup() {
-  popup.setContent(popupContent);
-  popupContent.style.display = "block";
-}
-/* Affichage de la popup au click sur le marker */
-firstObjective.on('click', () => {
-  displayPopup();
-})
-/* Fonction de fermeture de la popup */
-function closeDescriptionPopup() {
-  popupContent.style.display = "none";
-}
-/* Fermeture de la popup au click sur le bouton X */
-let closeBtn = document.getElementById('closePopupBtn');
-closeBtn.onclick(closeDescriptionPopup());
+    /* Fonction récupérant les différentes réponses proposées */
+    let answerButtonsList = "";
+    const answers = goalPopupElements[popupIndex].answers;
+    answers.forEach(element => {
+        let buttonHTML = '<button id="answerButtons" class="btn btn-primary mb-3 me-3 answerButtons">'+element[0]+'</button>';
+        answerButtonsList += buttonHTML;
+    });
+    popupAnswers.innerHTML = answerButtonsList;
+
+    /* Fonction d'affichage de la popup */
+    function displayPopup() {
+      popup.setContent(popupContent);
+      popupContent.style.display = "block";
+    };
+    /* Affichage de la popup au click sur le marker */
+    goalMarker.on('click', () => {
+      displayPopup();
+    });
+    /* Fonction de fermeture de la popup */
+    function closeDescriptionPopup() {
+      popupContent.style.display = "none";
+    };
+    /* Fermeture de la popup au click sur le bouton X */
+    let closeBtn = document.getElementById('closePopupBtn');
+    closeBtn.onclick = closeDescriptionPopup;
+  });
+};
+
+initGoal();
 
 /* Les options pour affiner la localisation */
 let options = {
@@ -79,7 +121,7 @@ let options = {
 
 /* Définition de l'icône du marker sur la position de l'utilisateur */
 let userPositionIcon = L.icon({
-    iconUrl: '/rond-vert.png', 
+    iconUrl: './rond-vert.png', 
     iconSize: [30,30],
     iconAnchor: [15,15]
 });
@@ -116,7 +158,7 @@ function success(pos) {
     let newLatLng = new L.LatLng(newLat, newLng);
     positionMarker.setLatLng(newLatLng);
   }
-  let objectiveDistance = getDistance(currentPos, firstObjectiveCoord);
+  let objectiveDistance = getDistance(currentPos, goalCoords);
   if (objectiveDistance < 50) {
     displayPopup();
     } 

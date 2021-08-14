@@ -19,25 +19,27 @@
     <!-- L'endroit ou la carte va s'afficher -->
     <div id="mapDiv"></div>
     <div class="layerToggler" id="layerToggler"></div>
-    <div id="popupInfo" class="container-fluid bg-primary p-0">
+    <div id="popupInfo" class="container-fluid p-0">
         <div class="card container-fluid m-0 p-0 border-0">
             <div class="close-button">
-                <button type="button" id="closePopupBtn" class="btn" aria-label="Close" onclick="closeDescriptionPopup()">
+                <button type="button" id="closePopupBtn" class="btn" aria-label="Close">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="black" class="bi bi-x-circle text-end" viewBox="0 0 16 16">
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                       </svg>
                 </button>
             </div>
-            <img src="./boulangerie.jpg" class="card-img-top" alt="Photo de la boulangerie">
+            <img src="" id="popupImage" class="card-img-top" alt="Photo de la boulangerie">
             <div class="card-body">
-                <h2 class="card-title">Boulangerie de Hagenthal-le-bas</h2>
-                <p class="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente autem modi quis numquam eius quos laborum, nulla id, error mollitia voluptatibus? Distinctio fugit sequi, beatae et autem culpa harum quas aliquid, eveniet eos libero exercitationem animi nesciunt aperiam nam corrupti corporis, doloremque delectus eum cupiditate reprehenderit! Molestiae omnis eos dolore debitis asperiores nemo magnam, molestias numquam illum, totam officiis sequi, tempore expedita ab laboriosam libero dolores obcaecati excepturi voluptatibus sunt. Eos totam odit dicta, repellendus explicabo hic voluptatem, aspernatur id ex tempore, ducimus voluptates doloribus animi. Non animi quo magni quos eveniet laboriosam in porro expedita labore eius! Provident atque voluptatibus, fuga inventore rerum veniam maiores voluptatem hic ea expedita laudantium repellat perferendis nulla itaque porro tempora reiciendis minus excepturi exercitationem adipisci similique, commodi quo! Vel alias, neque omnis accusamus maxime quaerat? Vel consectetur accusantium ipsa voluptatibus perspiciatis, optio quasi. Hic tempora, minima alias perferendis voluptate optio. Sapiente eum nisi est. Ea delectus maxime cumque labore libero assumenda exercitationem quos facilis ipsa, iure qui vel, dolorem repudiandae error hic minus ex amet nobis, quasi sint nihil! Molestias vero voluptatum perspiciatis libero molestiae! Accusantium quibusdam rerum perferendis, rem at doloribus ducimus omnis doloremque incidunt, iusto maiores vitae sapiente atque amet quia officia voluptatibus illum impedit dolorem. Beatae vero culpa fugiat perferendis numquam debitis odio rerum, praesentium officiis sequi mollitia veritatis totam aut, nihil similique facilis fugit ea corrupti quasi exercitationem animi, quo saepe. Similique tenetur expedita nobis. Itaque non quis, possimus, porro distinctio exercitationem consectetur error cupiditate iste mollitia at nisi eius architecto magni? Sunt blanditiis quam ipsum adipisci tenetur eligendi doloribus ex consequuntur hic aut expedita, nobis, inventore maiores delectus itaque necessitatibus ratione! Hic fugit quaerat voluptate accusantium vero. Minus laudantium accusantium rem alias assumenda sequi consequuntur, consectetur tempore sunt vitae modi doloremque ratione dolore exercitationem, corporis odio, obcaecati rerum?</p>
+                <h2 class="card-title" id="popupTitle"></h2>
+                <p class="card-text" id="popupDescription"></p>
+                <p class="card-text h5" id="question"></p>
+                <div id="answers" class="container-fluid"></div>
             </div>
         </div>
     </div>
 
-    <script src="./script.js"></script>
+    <script type="text/javascript" src="./script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 

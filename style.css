@@ -20,6 +20,11 @@ html, body, #mapDiv {
     left: 0;
     z-index: 20000;
     height: 100vh;
+    background-color: white;
+}
+
+.answerButtons {
+    width: 150px;
 }
 
 .layerToggler {
