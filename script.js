@@ -40,6 +40,8 @@ function toggleLayer() {
 };
 layerToggleButton.onclick = toggleLayer;
 
+
+
 /* Requête HTTP pour récupérer le contenu du JSON */ 
 const loadJSON = (callback) => {
   const xObj = new XMLHttpRequest();
@@ -61,6 +63,7 @@ let popupDescription = document.getElementById('popupDescription');
 let popupImgSrc = document.getElementById('popupImage');
 let popupQuestion = document.getElementById('question');
 let popupAnswers = document.getElementById('answers');
+let score = 0;
 /* Définition de la popup */
 let popupContent = document.getElementById('popupInfo');
 let popup = new L.Popup();
@@ -83,14 +86,35 @@ const initGoal = () => {
     popupImgSrc.src = goalPopupElements[popupIndex].image;
     popupQuestion.innerHTML = goalPopupElements[popupIndex].question;
 
-    /* Fonction récupérant les différentes réponses proposées */
+    /* Fonction récupérant les différentes réponses proposées et vérifiant la réponse cliquée*/
     let answerButtonsList = "";
-    const answers = goalPopupElements[popupIndex].answers;
-    answers.forEach(element => {
-        let buttonHTML = '<button id="answerButtons" class="btn btn-primary mb-3 me-3 answerButtons">'+element[0]+'</button>';
-        answerButtonsList += buttonHTML;
-    });
-    popupAnswers.innerHTML = answerButtonsList;
+    const choices = goalPopupElements[popupIndex].choices;
+
+    for(let i=0; i < choices.length; i++) {
+      let buttonHTML = '<button id="answer' + [i] + '" class="btn btn-primary mb-3 me-3 answerButtons" onclick="onButtonClick(this.id)">' + choices[i][0] + '</button>';
+      answerButtonsList += buttonHTML;
+      popupAnswers.innerHTML = answerButtonsList;
+      function onButtonClick(thisButton) {
+        let buttonText = thisButton.textContent;
+        // if(buttonText === goalPopupElements[popupIndex].answer) {
+        //     score++;
+        //   }
+          // popupIndex++;
+          console.log(buttonText);
+      }
+      }
+      function onButtonClick(thisButton) {
+        let buttonText = thisButton.textContent;
+        // if(buttonText === goalPopupElements[popupIndex].answer) {
+        //     score++;
+        //   }
+          // popupIndex++;
+          console.log(buttonText);
+      }
+    
+    
+    
+    
 
     /* Fonction d'affichage de la popup */
     function displayPopup() {
