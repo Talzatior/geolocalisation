@@ -18,8 +18,8 @@ const objectiveData = [
       "Le Château d’Hagenthal a appartenu aux Eptingen. L’histoire de ce Château reste malgré tout un mystère. On lit qu’il y aurait eu deux châteaux, l’un dans la commune d’Hagenthal-le-Haut et l’autre à Hagenthal-le-Bas. Faute d’étude précise, le château situé sur la commune d’Hagenthal-le-Bas est la pièce maîtresse d’un mystère, symbolique jumeau solitaire d’un endroit où tout semble fonctionner par deux.",
     "image": "./assets/images/objectives/chateau-hagenthal.jpeg",
     "audio": "",
-    "question": "Que ne trouve-t-on pas à la boulangerie d'Hagenthal-le-bas ?",
-    "choices": ["Des Eptingen", "Des Chirac", "Des Sarkozy", "Des Macron"],
+    "question": "A qui a appartenu le château de Hagenthal ?",
+    "choices": ["Aux Eptingen", "Aux Chirac", "Aux Sarkozy", "Aux Macron"],
     "answer": "Des Eptingen",
   },
   {
