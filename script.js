@@ -21,6 +21,17 @@ const objectiveData = [
     "question": "Que ne trouve-t-on pas à la boulangerie d'Hagenthal-le-bas ?",
     "choices": ["Des Eptingen", "Des Chirac", "Des Sarkozy", "Des Macron"],
     "answer": "Des Eptingen",
+  },
+  {
+    "coords": [47.52067, 7.48012],
+    "title": "Chapelle de l'Exaltation de la Sainte-Croix",
+    "description":
+      "À l'origine de la chapelle Sainte-Croix se trouve... une croix ! Erigée là par le couple Schoeffel de Hagenthal-le-Bas en 1832, afin d'obtenir la guérison de leur petite fille sourde et muette. Malgré le décès de l'enfant, la croix est toujours présente en 1842 quand un jeune bossu, Théophile Glermann, se retrouve libéré de son infirmité, un soir de tempête, au pied du monument. Au fil des passages, des dons sont déposés au pied de la croix. C'est alors que la famille Schoeffel décide d'y construire un lieu de culte.",
+    "image": "./chapelle2.jpg",
+    "audio": "",
+    "question": "En quelle année fut construite la chapelle de l'Exaltation Sainte-Croix ?",
+    "choices": ["1832", "1842", "1852", "1862"],
+    "answer": "1842",
   }
 ];
 
@@ -93,12 +104,23 @@ let popupAnswers = document.getElementById("answers");
 let buttonId = "";
 let correctAnswer;
 let score = 0;
+let popupEndContent = document.getElementById("popupEnd");
+let closeEndPopup = document.getElementById("closeEndPopupBtn");
+let popupEndScore = document.getElementById("score");
 
-/* Fonction d'affichage de la popup */
+/* Fonction d'affichage de la popup description */
 
 function displayPopup() {
   popup.setContent(popupContent);
   popupContent.style.display = "block";
+}
+
+/* Fonction d'affichage de la popup description */
+
+function displayEndPopup() {
+  popup.setContent(popupEndContent);
+  popupEndContent.style.display = "block";
+  popupEndScore.innerText = "Votre score est de " + score + "/" + objectiveData.length + ".";
 }
 
 // Add Goal Marker
@@ -133,7 +155,7 @@ function popupLoadContent() {
     let buttonHTML =
       '<button id="answer' +
       [i] +
-      '" class="btn btn-primary mb-3 me-3 answerButtons" onclick="onButtonClick(this.id)">' +
+      '" class="btn btn-primary mb-3 me-3 answerButtons" onclick="onAnswerClick(this.id)">' +
       choices[i] +
       "</button>";
     answerButtonsList += buttonHTML;
@@ -142,26 +164,31 @@ function popupLoadContent() {
 }
 popupLoadContent();
 
-/* Affichage de la popup au click sur le marker */
-
-goalMarker.on("click", () => {
-  displayPopup();
-});
-
-/* Fonction de fermeture de la popup */
+/* Fonction de fermeture de la popup description */
 
 function closeDescriptionPopup() {
   popupContent.style.display = "none";
 }
 
-/* Fermeture de la popup au click sur le bouton X */
+/* Fonction de fermeture de la popup objectif suivant */
+
+function closeEndPopupBtn() {
+  popupEndContent.style.display = "none";
+}
+
+/* Fermeture de la popup description au click sur le bouton X */
 
 let closeBtn = document.getElementById("closePopupBtn");
 closeBtn.onclick = closeDescriptionPopup;
 
+/* Fermeture de la popup Score au click sur le bouton X */
+
+let closeEndBtn = document.getElementById("closeEndPopupBtn");
+closeEndBtn.onclick = closeEndPopupBtn;
+
 /* Définition de la popup */
 
-function onButtonClick(id) {
+function onAnswerClick(id) {
   buttonId = id;
   let answerClicked = document.getElementById(buttonId).textContent;
   if(answerClicked === objectiveData[popupIndex].answer){
@@ -170,14 +197,17 @@ function onButtonClick(id) {
 
   closeDescriptionPopup();
   popupIndex++;
-  
-  /* Annulation de la génération des Markers / popups s'il n'y a plus d'objectif */
+  console.log(popupIndex);
+  /* Annulation de la génération des Markers / popups s'il n'y a plus d'objectif // Affichage de la fenêtre de résultats */
   
   if(popupIndex < objectiveData.length) {
     myMap.removeLayer(goalMarker);
     createMarker();
     popupLoadContent();
-}
+  }else {
+    closeDescriptionPopup();
+    displayEndPopup();
+  }
 }
 
 
