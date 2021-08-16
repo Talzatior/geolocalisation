@@ -19,6 +19,8 @@
     <!-- L'endroit ou la carte va s'afficher -->
     <div id="mapDiv"></div>
     <div class="layerToggler" id="layerToggler"></div>
+
+    <!-- popup de description objectifs -->
     <div id="popupInfo" class="container-fluid p-0">
         <div class="card container-fluid m-0 p-0 border-0">
             <div class="close-button">
@@ -30,6 +32,7 @@
                 </button>
             </div>
             <img src="" id="popupImage" class="card-img-top" alt="Photo de la boulangerie">
+            <audio src="" id="popupAudio" autoplay></audio>
             <div class="card-body">
                 <h2 class="card-title" id="popupTitle"></h2>
                 <p class="card-text" id="popupDescription"></p>
@@ -38,6 +41,8 @@
             </div>
         </div>
     </div>
+
+    <!-- popup de transition d'un objectif à l'autre -->
     <div id="popupTransition" class="container-fluid p-0">
         <div class="card container-fluid m-0 p-0 border-0">
             <div class="close-button">

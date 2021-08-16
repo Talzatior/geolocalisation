@@ -28,7 +28,7 @@ const objectiveData = [
     "description":
       "À l'origine de la chapelle Sainte-Croix se trouve... une croix ! Erigée là par le couple Schoeffel de Hagenthal-le-Bas en 1832, afin d'obtenir la guérison de leur petite fille sourde et muette. Malgré le décès de l'enfant, la croix est toujours présente en 1842 quand un jeune bossu, Théophile Glermann, se retrouve libéré de son infirmité, un soir de tempête, au pied du monument. Au fil des passages, des dons sont déposés au pied de la croix. C'est alors que la famille Schoeffel décide d'y construire un lieu de culte.",
     "image": "./assets/images/objectives/chapelle2.jpg",
-    "audio": "",
+    "audio": "./assets/sons/cloches.mp3",
     "question": "En quelle année fut construite la chapelle de l'Exaltation Sainte-Croix ?",
     "choices": ["1832", "1842", "1852", "1862"],
     "answer": "1842",
@@ -76,7 +76,6 @@ function toggleLayer() {
     myMap.addLayer(new L.TileLayer(satUrl, satOptions));
     layerToggleButton.style.backgroundImage = "url(./assets/images/icons/osm.png)";
     osmLayer = false;
-    console.log("Boucle 1 : osmLayer : " + osmLayer);
   } else {
     myMap.addLayer(new L.TileLayer(osmUrl, osmOptions));
     layerToggleButton.style.backgroundImage = "url(./assets/images/icons/sat.png)";
@@ -101,6 +100,7 @@ let popupDescription = document.getElementById("popupDescription");
 let popupImgSrc = document.getElementById("popupImage");
 let popupQuestion = document.getElementById("question");
 let popupAnswers = document.getElementById("answers");
+let popupAudio = document.getElementById("popupAudio");
 let buttonId = "";
 let correctAnswer;
 let score = 0;
@@ -116,6 +116,7 @@ let nextObjective = document.getElementById("nextObjective");
 /* Fonction d'affichage de la popup description */
 
 function displayPopup() {
+  popupLoadContent();
   popup.setContent(popupContent);
   popupContent.style.display = "block";
 }
@@ -159,6 +160,12 @@ function popupLoadContent() {
   popupImgSrc.src = objectiveData[popupIndex].image;
   popupQuestion.innerHTML = objectiveData[popupIndex].question;
   correctAnswer = objectiveData[popupIndex].answer;
+  let audioSrc = objectiveData[popupIndex].audio;
+
+  /* Fonction récupérant l'audio lorsqu'il y a lieu */
+  if(audioSrc){
+    popupAudio.src = audioSrc;
+  }
 
   /* Fonction récupérant les différentes réponses proposées et vérifiant la réponse cliquée*/
 
@@ -226,10 +233,9 @@ function onAnswerClick(id) {
   
   if(popupIndex < objectiveData.length) {
     displayTransitionPopup();
-    console.log(popupIndex);
     myMap.removeLayer(goalMarker);
     createMarker();
-    popupLoadContent();
+
   }else {
     closeDescriptionPopup();
     displayEndPopup();
