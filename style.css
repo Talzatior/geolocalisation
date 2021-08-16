@@ -9,7 +9,7 @@ html, body, #mapDiv {
     width: 100vw;
 }
 
-#popupInfo, #popupEnd {
+#popupInfo, #popupEnd, #popupTransition {
     display: none;
     position: absolute;
     margin: 0;

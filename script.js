@@ -5,7 +5,7 @@ const objectiveData = [
     "title": "Boulangerie de Hagenthal-le-bas",
     "description":
       "Bienvenue à la boulangerie de Hagenthal-le-bas.<br> On y trouve des pâtisseries, des viennoiseries, du pain, des brioches, des petits gâteux et même des glaces maison.",
-    "image": "./boulangerie.jpg",
+    "image": "./assets/images/objectives/boulangerie.jpg",
     "audio": "",
     "question": "Que ne trouve-t-on pas à la boulangerie d'Hagenthal-le-bas ?",
     "choices": ["Croissants", "Oeufs", "Eclair au café", "Baguette"],
@@ -16,7 +16,7 @@ const objectiveData = [
     "title": "Château de Hagenthal-le-bas",
     "description":
       "Le Château d’Hagenthal a appartenu aux Eptingen. L’histoire de ce Château reste malgré tout un mystère. On lit qu’il y aurait eu deux châteaux, l’un dans la commune d’Hagenthal-le-Haut et l’autre à Hagenthal-le-Bas. Faute d’étude précise, le château situé sur la commune d’Hagenthal-le-Bas est la pièce maîtresse d’un mystère, symbolique jumeau solitaire d’un endroit où tout semble fonctionner par deux.",
-    "image": "./chateau-hagenthal.jpeg",
+    "image": "./assets/images/objectives/chateau-hagenthal.jpeg",
     "audio": "",
     "question": "Que ne trouve-t-on pas à la boulangerie d'Hagenthal-le-bas ?",
     "choices": ["Des Eptingen", "Des Chirac", "Des Sarkozy", "Des Macron"],
@@ -27,7 +27,7 @@ const objectiveData = [
     "title": "Chapelle de l'Exaltation de la Sainte-Croix",
     "description":
       "À l'origine de la chapelle Sainte-Croix se trouve... une croix ! Erigée là par le couple Schoeffel de Hagenthal-le-Bas en 1832, afin d'obtenir la guérison de leur petite fille sourde et muette. Malgré le décès de l'enfant, la croix est toujours présente en 1842 quand un jeune bossu, Théophile Glermann, se retrouve libéré de son infirmité, un soir de tempête, au pied du monument. Au fil des passages, des dons sont déposés au pied de la croix. C'est alors que la famille Schoeffel décide d'y construire un lieu de culte.",
-    "image": "./chapelle2.jpg",
+    "image": "./assets/images/objectives/chapelle2.jpg",
     "audio": "",
     "question": "En quelle année fut construite la chapelle de l'Exaltation Sainte-Croix ?",
     "choices": ["1832", "1842", "1852", "1862"],
@@ -74,12 +74,12 @@ let layerToggleButton = document.getElementById("layerToggler");
 function toggleLayer() {
   if (osmLayer) {
     myMap.addLayer(new L.TileLayer(satUrl, satOptions));
-    layerToggleButton.style.backgroundImage = "url(./osm.png)";
+    layerToggleButton.style.backgroundImage = "url(./assets/images/icons/osm.png)";
     osmLayer = false;
     console.log("Boucle 1 : osmLayer : " + osmLayer);
   } else {
     myMap.addLayer(new L.TileLayer(osmUrl, osmOptions));
-    layerToggleButton.style.backgroundImage = "url(./sat.png)";
+    layerToggleButton.style.backgroundImage = "url(./assets/images/icons/sat.png)";
     osmLayer = true;
   }
 }
@@ -104,9 +104,14 @@ let popupAnswers = document.getElementById("answers");
 let buttonId = "";
 let correctAnswer;
 let score = 0;
+
 let popupEndContent = document.getElementById("popupEnd");
 let closeEndPopup = document.getElementById("closeEndPopupBtn");
 let popupEndScore = document.getElementById("score");
+
+let popupTransitionContent = document.getElementById("popupTransition");
+let closeTransitionPopup = document.getElementById("closeTransitionPopupBtn");
+let nextObjective = document.getElementById("nextObjective");
 
 /* Fonction d'affichage de la popup description */
 
@@ -115,7 +120,15 @@ function displayPopup() {
   popupContent.style.display = "block";
 }
 
-/* Fonction d'affichage de la popup description */
+/* Fonction d'affichage de la popup de transition */
+
+function displayTransitionPopup() {
+  popup.setContent(popupTransitionContent);
+  popupTransitionContent.style.display = "block";
+  nextObjective.innerText = objectiveData[popupIndex].title;
+}
+
+/* Fonction d'affichage de la popup de fin */
 
 function displayEndPopup() {
   popup.setContent(popupEndContent);
@@ -172,6 +185,12 @@ function closeDescriptionPopup() {
 
 /* Fonction de fermeture de la popup objectif suivant */
 
+function closeTransitionPopupBtn() {
+  popupTransitionContent.style.display = "none";
+}
+
+/* Fonction de fermeture de la popup de fin */
+
 function closeEndPopupBtn() {
   popupEndContent.style.display = "none";
 }
@@ -181,7 +200,12 @@ function closeEndPopupBtn() {
 let closeBtn = document.getElementById("closePopupBtn");
 closeBtn.onclick = closeDescriptionPopup;
 
-/* Fermeture de la popup Score au click sur le bouton X */
+/* Fermeture de la popup de transition au click sur le bouton X */
+
+let closeTransitionBtn = document.getElementById("closeTransitionPopupBtn");
+closeTransitionBtn.onclick = closeTransitionPopupBtn;
+
+/* Fermeture de la popup de fin au click sur le bouton X */
 
 let closeEndBtn = document.getElementById("closeEndPopupBtn");
 closeEndBtn.onclick = closeEndPopupBtn;
@@ -197,10 +221,12 @@ function onAnswerClick(id) {
 
   closeDescriptionPopup();
   popupIndex++;
-  console.log(popupIndex);
+  
   /* Annulation de la génération des Markers / popups s'il n'y a plus d'objectif // Affichage de la fenêtre de résultats */
   
   if(popupIndex < objectiveData.length) {
+    displayTransitionPopup();
+    console.log(popupIndex);
     myMap.removeLayer(goalMarker);
     createMarker();
     popupLoadContent();
@@ -222,7 +248,7 @@ let options = {
 
 /* Définition de l'icône du marker sur la position de l'utilisateur */
 let userPositionIcon = L.icon({
-  iconUrl: "./rond-vert.png",
+  iconUrl: "./assets/images/icons/rond-vert.png",
   iconSize: [30, 30],
   iconAnchor: [15, 15],
 });
