@@ -92,7 +92,7 @@ layerToggleButton.onclick = toggleLayer;
 
 let popupContent = document.getElementById("popupInfo");
 let popup = new L.Popup();
-let popupIndex = 0;
+let popupIndex = parseInt(localStorage.popupIndex = "0");
 let goalCoords = [];
 let goalMarker;
 let popupTitle = document.getElementById("popupTitle");
@@ -228,6 +228,7 @@ function onAnswerClick(id) {
 
   closeDescriptionPopup();
   popupIndex++;
+  localStorage.popupIndex = popupIndex.toString();
   
   /* Annulation de la génération des Markers / popups s'il n'y a plus d'objectif // Affichage de la fenêtre de résultats */
   
