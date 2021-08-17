@@ -38,7 +38,10 @@ const objectiveData = [
 /************* Partie stockage local *************/
 
 if(!localStorage.popupIndex) {
-  localStorage.popupIndex = "0"
+  localStorage.popupIndex = "0";
+}
+if(!localStorage.score) {
+  localStorage.score = "0";
 }
 
 /************* Partie Map *************/
@@ -108,7 +111,7 @@ let popupAnswers = document.getElementById("answers");
 let popupAudio = document.getElementById("popupAudio");
 let buttonId = "";
 let correctAnswer;
-let score = 0;
+let score = parseInt(localStorage.score);
 
 let popupEndContent = document.getElementById("popupEnd");
 let closeEndPopup = document.getElementById("closeEndPopupBtn");
@@ -229,6 +232,7 @@ function onAnswerClick(id) {
   let answerClicked = document.getElementById(buttonId).textContent;
   if(answerClicked === objectiveData[popupIndex].answer){
     score++;
+    localStorage.score = score.toString()
   }
 
   closeDescriptionPopup();
