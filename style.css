@@ -43,5 +43,11 @@ html, body, #mapDiv {
     top: 5px;
     right: 5px;
     background-color: rgba(255, 255, 255, .4);
+    border-radius: 100%;
+    border: 1px solid rgba(255, 255, 255, 1)
 }
+.btn {
+     padding: 0 !important;
+     border: none !important;
+ }
 
