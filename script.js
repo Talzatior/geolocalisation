@@ -35,6 +35,11 @@ const objectiveData = [
   }
 ];
 
+/************* Partie stockage local *************/
+
+if(!localStorage.popupIndex) {
+  localStorage.popupIndex = "0"
+}
 
 /************* Partie Map *************/
 
@@ -92,7 +97,7 @@ layerToggleButton.onclick = toggleLayer;
 
 let popupContent = document.getElementById("popupInfo");
 let popup = new L.Popup();
-let popupIndex = parseInt(localStorage.popupIndex = "0");
+let popupIndex = parseInt(localStorage.popupIndex);
 let goalCoords = [];
 let goalMarker;
 let popupTitle = document.getElementById("popupTitle");
