@@ -20,7 +20,7 @@ const objectiveData = [
     "audio": "",
     "question": "A qui a appartenu le château de Hagenthal ?",
     "choices": ["Aux Eptingen", "Aux Chirac", "Aux Sarkozy", "Aux Macron"],
-    "answer": "Des Eptingen",
+    "answer": "Aux Eptingen",
   },
   {
     "coords": [47.52067, 7.48012],
