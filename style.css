@@ -46,7 +46,7 @@ html, body, #mapDiv {
     border-radius: 100%;
     border: 1px solid rgba(255, 255, 255, 1)
 }
-.btn {
+.close-button .btn {
      padding: 0 !important;
      border: none !important;
  }
