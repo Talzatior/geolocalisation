@@ -92,6 +92,15 @@ function toggleLayer() {
 }
 layerToggleButton.onclick = toggleLayer;
 
+/************* Partie Toolbar *************/
+
+
+/* Info button */
+
+let infoPopup = document.getElementById("infoPopup");
+let infoBtn = document.getElementById("infoBtn");
+infoBtn.addEventListener('click', function() { infoPopup.style.display = "block" });
+
 
 /************* Partie Popup + Marker *************/
 
