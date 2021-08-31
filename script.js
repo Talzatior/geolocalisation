@@ -92,15 +92,6 @@ function toggleLayer() {
 }
 layerToggleButton.onclick = toggleLayer;
 
-/************* Partie Toolbar *************/
-
-
-/* Info button */
-
-let infoPopup = document.getElementById("infoPopup");
-let infoBtn = document.getElementById("infoBtn");
-infoBtn.addEventListener('click', function() { infoPopup.style.display = "block" });
-
 
 /************* Partie Popup + Marker *************/
 
@@ -224,6 +215,7 @@ function closeEndPopupBtn() {
 let closeBtn = document.getElementById("closePopupBtn");
 closeBtn.onclick = closeDescriptionPopup;
 
+
 /* Fermeture de la popup de transition au click sur le bouton X */
 
 let closeTransitionBtn = document.getElementById("closeTransitionPopupBtn");
@@ -262,6 +254,26 @@ function onAnswerClick(id) {
 }
 
 
+/************* Partie Toolbar *************/
+
+
+/* Info button */
+
+let infoPopup = document.getElementById("infoPopup");
+let infoBtn = document.getElementById("infoBtn");
+infoBtn.addEventListener('click', function() { 
+  infoPopup.style.display = "inline-flex"; 
+  let infoObjectiveText = "Vous êtes à l'objectif " + popupIndex + "/" + objectiveData.length + ".";
+  let textToolbarInfo = document.getElementById('textToolbarInfo');
+  textToolbarInfo.innerText = infoObjectiveText;
+  let infoScoreText = "Votre score est de " + score + "/" + objectiveData.length + ".";
+  let scoreToolbarInfo = document.getElementById('scoreToolbarInfo');
+  scoreToolbarInfo.innerText = infoScoreText;
+});
+let closeToolbarBtn = document.getElementById("closeToolbarPopupBtn");
+closeToolbarBtn.addEventListener('click', function () { infoPopup.style.display = "none" })
+
+
 /************* Partie Localisation *************/
 
 
@@ -280,6 +292,7 @@ let userPositionIcon = L.icon({
 
 /* Initialise le marker à la position de l'utilisateur de l'utilisateur */
 let positionMarker;
+let currentPos;
 
 function getDistance(start, goal) {
   // return distance in meters
@@ -325,3 +338,9 @@ function error(err) {
 }
 
 navigator.geolocation.watchPosition(success, error, options);
+
+let centerMapBtn = document.getElementById('centerMap');
+function centerMapOnUser() {
+  myMap.flyTo(currentPos, 14);
+}
+centerMapBtn.onclick = centerMapOnUser;
