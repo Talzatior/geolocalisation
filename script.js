@@ -341,6 +341,6 @@ navigator.geolocation.watchPosition(success, error, options);
 
 let centerMapBtn = document.getElementById('centerMap');
 function centerMapOnUser() {
-  myMap.flyTo(currentPos, 14);
+  myMap.flyTo(currentPos);
 }
 centerMapBtn.onclick = centerMapOnUser;
